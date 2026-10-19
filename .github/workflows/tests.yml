@@ -1,0 +1,39 @@
+name: Offline tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - name: Windows PowerShell 5.1 offline suites
+        shell: powershell
+        run: |
+          if ($PSVersionTable.PSVersion.Major -ne 5) {
+            throw 'These suites must run in Windows PowerShell 5.1.'
+          }
+          $suites = @(Get-ChildItem -LiteralPath . -Filter 'Test-*.ps1' |
+            Where-Object Name -ne 'Test-Tunnel-Recovery.ps1' |
+            Sort-Object Name)
+          if ($suites.Count -eq 0) { throw 'No offline suites found.' }
+          foreach ($suite in $suites) {
+            & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $suite.FullName
+            if ($LASTEXITCODE -ne 0) {
+              throw "$suite failed with exit code $LASTEXITCODE"
+            }
+          }
+      - name: Python guard offline suite
+        run: python -m unittest -v test_tunnel_guard

@@ -1,0 +1,29 @@
+# Personal configuration and SSH material
+tunnels.local.json
+*.local.json
+ssh-config.local
+.ssh/
+id_rsa*
+id_ed25519*
+*.pem
+*.ppk
+
+# Local runtime state and diagnostic logs
+.runtime/
+logs/
+*.log
+*.log.1
+*.worker.json
+*.worker.json.*.new
+*.reconnect
+*.stop
+backup-*/
+
+# Python and editor caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

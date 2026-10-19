@@ -1,0 +1,26 @@
+# Copy the entries you need to your own SSH config, then replace the examples.
+# The tunnel manager reads this file; it does not modify it.
+# No RemoteForward entry is required: the manager supplies it.
+
+Host server-a
+    HostName server-a.example.com
+    User your-user
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host server-b
+    HostName server-b.example.com
+    User your-user
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+# Optional jump host: add "ProxyJump jump-host" to a target's Host block.
+# Host jump-host
+#     HostName jump.example.com
+#     User your-user
+#     IdentityFile ~/.ssh/id_ed25519
+
+# Keep tunnel aliases free of LocalForward, DynamicForward, and unrelated
+# RemoteForward entries. Use a dedicated alias if your normal alias has them.

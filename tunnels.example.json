@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "SshConfigPath": "~/.ssh/config",
+  "SshExecutable": "",
+  "Targets": ["server-a", "server-b"],
+  "LocalProxyHost": "127.0.0.1",
+  "LocalProxyPort": 7897,
+  "RemotePort": 7897,
+  "ProbeHost": "www.microsoft.com",
+  "ProbePort": 443
+}
